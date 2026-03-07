@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jossy Cakes| Handmade with Love</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDF6E3',
+                        blush: '#FFE4E6',
+                        beige: '#F5E6D3',
+                        caramel: '#D4A574',
+                        'soft-pink': '#FCE7F3',
+                        'warm-brown': '#8B6F47',
+                        'deep-brown': '#5D4037',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 2s infinite',
+                        'dust': 'dust 20s linear infinite',
+                        'whisk': 'whisk 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(2deg)' },
+                        },
+                        dust: {
+                            '0%': { transform: 'translateY(0) translateX(0)', opacity: '0' },
+                            '10%': { opacity: '0.3' },
+                            '90%': { opacity: '0.3' },
+                            '100%': { transform: 'translateY(-100px) translateX(50px)', opacity: '0' },
+                        },
+                        whisk: {
+                            '0%, 100%': { transform: 'rotate(-5deg)' },
+                            '50%': { transform: 'rotate(5deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .flour-dust {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .text-shadow-soft {
+            text-shadow: 2px 2px 4px rgba(139, 111, 71, 0.1);
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(to bottom, rgba(253, 246, 227, 0) 0%, rgba(253, 246, 227, 0.8) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(139, 111, 71, 0.15);
+        }
+        
+        .btn-bake {
+            background: linear-gradient(135deg, #D4A574 0%, #C9956C 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-bake:hover {
+            background: linear-gradient(135deg, #C9956C 0%, #B8855C 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(212, 165, 116, 0.4);
+        }
+        
+        .pattern-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(212, 165, 116, 0.15) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-cream font-sans text-warm-brown overflow-x-hidden">
+
+    <!-- Floating Flour Dust Particles -->
+    <div id="dust-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-soft">
+                        <i data-lucide="cake" class="w-8 h-8 text-caramel"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-serif text-2xl font-bold text-deep-brown">Jossy Cakes</h1>
+                        <p class="text-xs text-caramel font-medium tracking-wider">EST. 2018</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-warm-brown hover:text-caramel transition-colors font-medium">Home</a>
+                    <a href="#featured" class="text-warm-brown hover:text-caramel transition-colors font-medium">Our Cakes</a>
+                    <a href="#seasonal" class="text-warm-brown hover:text-caramel transition-colors font-medium">Seasonal</a>
+                    <a href="#gallery" class="text-warm-brown hover:text-caramel transition-colors font-medium">Gallery</a>
+                    <!-- <a href="#custom" class="text-warm-brown hover:text-caramel transition-colors font-medium">Custom Orders</a> -->
+                    <a href="#testimonials" class="text-warm-brown hover:text-caramel transition-colors font-medium">Stories</a>
+                    <button class="btn-bake text-white px-6 py-3 rounded-full font-medium shadow-lg flex items-center space-x-2">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        <span>Order Now</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6 text-deep-brown"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-beige">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#home" class="block px-3 py-3 rounded-lg hover:bg-blush transition-colors font-medium">Home</a>
+                <a href="#featured" class="block px-3 py-3 rounded-lg hover:bg-blush transition-colors font-medium">Our Cakes</a>
+                <a href="#seasonal" class="block px-3 py-3 rounded-lg hover:bg-blush transition-colors font-medium">Seasonal</a>
+                <a href="#custom" class="block px-3 py-3 rounded-lg hover:bg-blush transition-colors font-medium">Custom Orders</a>
+                <a href="#testimonials" class="block px-3 py-3 rounded-lg hover:bg-blush transition-colors font-medium">Stories</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 pattern-bg opacity-50"></div>
+        
+        <!-- Decorative Elements -->
+        <div class="absolute top-32 left-10 animate-float opacity-20">
+            <i data-lucide="cookie" class="w-24 h-24 text-caramel"></i>
+        </div>
+        <div class="absolute bottom-32 right-10 animate-float-delayed opacity-20">
+            <i data-lucide="cake-slice" class="w-32 h-32 text-caramel"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                        <span class="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="text-sm font-medium text-warm-brown">Fresh from the oven today</span>
+                    </div>
+                    
+                    <h1 class="font-serif text-5xl lg:text-7xl font-bold text-deep-brown leading-tight text-shadow-soft">
+                        Every Cake Tells a <span class="text-caramel italic">Sweet</span> Story
+                    </h1>
+                    
+                    <p class="text-lg text-warm-brown/80 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                        Step into our cozy bakery where butter, sugar, and love come together to create edible works of art. From birthday celebrations to quiet afternoon treats, we're here to make every moment a little sweeter.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="btn-bake text-white px-8 py-4 rounded-full font-semibold shadow-xl flex items-center justify-center space-x-2 text-lg">
+                            <span>Explore Our Menu</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <button class="bg-white text-warm-brown border-2 border-caramel/30 px-8 py-4 rounded-full font-semibold hover:bg-blush/50 transition-all flex items-center justify-center space-x-2 text-lg">
+                            <i data-lucide="heart" class="w-5 h-5 text-caramel"></i>
+                            <span>Custom Order</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-center lg:justify-start space-x-8 pt-4">
+                        <div class="text-center">
+                            <p class="font-serif text-3xl font-bold text-caramel">15k+</p>
+                            <p class="text-sm text-warm-brown/70">Happy Customers</p>
+                        </div>
+                        <div class="w-px h-12 bg-caramel/30"></div>
+                        <div class="text-center">
+                            <p class="font-serif text-3xl font-bold text-caramel">50+</p>
+                            <p class="text-sm text-warm-brown/70">Unique Recipes</p>
+                        </div>
+                        <div class="w-px h-12 bg-caramel/30"></div>
+                        <div class="text-center">
+                            <p class="font-serif text-3xl font-bold text-caramel">6</p>
+                            <p class="text-sm text-warm-brown/70">Years of Love</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Images -->
+                <div class="relative">
+                    <div class="relative grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-caramel rounded-3xl rotate-3 group-hover:rotate-6 transition-transform duration-500 opacity-20"></div>
+                                <img src="https://static.photos/food/640x800/123" alt="Layered Cake" class="relative rounded-3xl shadow-2xl w-full h-64 object-cover card-hover">
+                                <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                                    <p class="text-sm font-medium text-deep-brown">Wedding Collection</p>
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-blush rounded-3xl -rotate-2 group-hover:-rotate-4 transition-transform duration-500 opacity-30"></div>
+                                <img src="https://static.photos/food/640x800/456" alt="Cupcakes" class="relative rounded-3xl shadow-2xl w-full h-48 object-cover card-hover">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-beige rounded-3xl -rotate-3 group-hover:-rotate-6 transition-transform duration-500 opacity-30"></div>
+                                <img src="https://static.photos/food/640x800/789" alt="Pastries" class="relative rounded-3xl shadow-2xl w-full h-48 object-cover card-hover">
+                            </div>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-soft-pink rounded-3xl rotate-2 group-hover:rotate-4 transition-transform duration-500 opacity-30"></div>
+                                <img src="https://static.photos/food/640x800/321" alt="Croissants" class="relative rounded-3xl shadow-2xl w-full h-64 object-cover card-hover">
+                                <div class="absolute top-4 right-4 bg-caramel text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg animate-pulse">
+                                    Best Seller
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl animate-float">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-blush p-3 rounded-full">
+                                <i data-lucide="award" class="w-6 h-6 text-caramel"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-deep-brown">Award Winning</p>
+                                <p class="text-xs text-warm-brown/70">Master Baker 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Cakes Section -->
+    <section id="featured" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <div class="inline-flex items-center space-x-2 mb-4">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-caramel"></i>
+                    <span class="text-caramel font-medium tracking-wider uppercase text-sm">Our Signature Collection</span>
+                    <i data-lucide="sparkles" class="w-5 h-5 text-caramel"></i>
+                </div>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-deep-brown mb-4">Edible Works of Art</h2>
+                <p class="text-warm-brown/80 text-lg">Handcrafted with the finest ingredients and a whole lot of love. Each creation is baked fresh daily in our cozy kitchen.</p>
+            </div>
+
+            <!-- Cakes Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cake Card 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg card-hover group">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="https://static.photos/food/640x480/111" alt="Strawberry Dream Cake" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-caramel shadow-md">
+                            $48
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <button class="w-full bg-white text-deep-brown py-3 rounded-full font-medium hover:bg-caramel hover:text-white transition-colors flex items-center justify-center space-x-2">
+                                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-deep-brown mb-2">Strawberry Dream</h3>
+                        <p class="text-warm-brown/70 mb-4">Layers of vanilla sponge with fresh strawberry compote and whipped cream, topped with organic berries.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-1 text-caramel">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <span class="text-sm text-warm-brown ml-1">(128)</span>
+                            </div>
+                            <span class="text-xs bg-blush px-3 py-1 rounded-full text-caramel font-medium">6-8 servings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cake Card 2 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg card-hover group">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="https://static.photos/food/640x480/222" alt="Chocolate Truffle Cake" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-caramel shadow-md">
+                            $56
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <button class="w-full bg-white text-deep-brown py-3 rounded-full font-medium hover:bg-caramel hover:text-white transition-colors flex items-center justify-center space-x-2">
+                                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-deep-brown mb-2">Belgian Chocolate</h3>
+                        <p class="text-warm-brown/70 mb-4">Rich dark chocolate layers with ganache filling, finished with gold leaf and truffle decorations.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-1 text-caramel">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <span class="text-sm text-warm-brown ml-1">(96)</span>
+                            </div>
+                            <span class="text-xs bg-blush px-3 py-1 rounded-full text-caramel font-medium">8-10 servings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cake Card 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg card-hover group">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="https://static.photos/food/640x480/333" alt="Lemon Lavender Cake" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-caramel shadow-md">
+                            $52
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-brown/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <button class="w-full bg-white text-deep-brown py-3 rounded-full font-medium hover:bg-caramel hover:text-white transition-colors flex items-center justify-center space-x-2">
+                                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-deep-brown mb-2">Lemon Lavender</h3>
+                        <p class="text-warm-brown/70 mb-4">Zesty lemon curd with subtle lavender notes, wrapped in Italian meringue buttercream.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-1 text-caramel">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <span class="text-sm text-warm-brown ml-1">(84)</span>
+                            </div>
+                            <span class="text-xs bg-blush px-3 py-1 rounded-full text-caramel font-medium">6-8 servings</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button class="inline-flex items-center space-x-2 text-caramel font-semibold hover:text-deep-brown transition-colors text-lg border-b-2 border-caramel pb-1">
+                    <span>View Full Menu</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seasonal Pastries Section -->
+    <section id="seasonal" class="py-24 bg-blush/30 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full pattern-bg opacity-30"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Image Side -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-caramel rounded-[3rem] rotate-3 opacity-10"></div>
+                    <img src="https://static.photos/food/800x600/444" alt="Seasonal Pastries" class="relative rounded-[2.5rem] shadow-2xl w-full h-[600px] object-cover">
+                    
+                    <!-- Floating Cards -->
+                    <div class="absolute -right-8 top-20 bg-white p-4 rounded-2xl shadow-xl animate-float">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-green-100 p-2 rounded-lg">
+                                <i data-lucide="leaf" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-deep-brown text-sm">Fresh & Local</p>
+                                <p class="text-xs text-warm-brown/70">Farm ingredients</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -left-8 bottom-32 bg-white p-4 rounded-2xl shadow-xl animate-float-delayed">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-orange-100 p-2 rounded-lg">
+                                <i data-lucide="flame" class="w-5 h-5 text-orange-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-deep-brown text-sm">Baked Daily</p>
+                                <p class="text-xs text-warm-brown/70">5 AM start</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Side -->
+                <div class="space-y-8">
+                    <div class="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                        <i data-lucide="calendar" class="w-4 h-4 text-caramel"></i>
+                        <span class="text-sm font-medium text-warm-brown">Spring Collection 2024</span>
+                    </div>
+                    
+                    <h2 class="font-serif text-4xl lg:text-5xl font-bold text-deep-brown leading-tight">
+                        Seasonal Delights That <span class="text-caramel italic">Celebrate</span> the Moment
+                    </h2>
+                    
+                    <p class="text-lg text-warm-brown/80 leading-relaxed">
+                        Our seasonal pastries capture the essence of each passing season. From spring's first strawberry to autumn's cinnamon spice, we craft limited-time treats that honor nature's calendar.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-blush rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="flower-2" class="w-6 h-6 text-caramel"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-deep-brown mb-2">Cherry Blossom Macarons</h4>
+                            <p class="text-sm text-warm-brown/70">Delicate pink shells with sakura ganache</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-beige rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="sun" class="w-6 h-6 text-caramel"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-deep-brown mb-2">Honey Lavender Scones</h4>
+                            <p class="text-sm text-warm-brown/70">Local honey with Provence lavender</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-soft-pink rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="heart" class="w-6 h-6 text-caramel"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-deep-brown mb-2">Rose Pistachio Tart</h4>
+                            <p class="text-sm text-warm-brown/70">Persian rose water with crushed pistachios</p>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow">
+                            <div class="w-12 h-12 bg-cream rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="citrus" class="w-6 h-6 text-caramel"></i>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-deep-brown mb-2">Yuzu Meringue Pie</h4>
+                            <p class="text-sm text-warm-brown/70">Japanese citrus with toasted meringue</p>
+                        </div>
+                    </div>
+
+                    <button class="btn-bake text-white px-8 py-4 rounded-full font-semibold shadow-xl flex items-center space-x-2 w-full sm:w-auto justify-center">
+                        <span>Explore Seasonal Menu</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+     <!-- Gallery Hero -->
+    <section class="relative min-h-[60vh] flex items-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 pattern-bg opacity-50"></div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-32 left-10 animate-float opacity-20">
+            <i data-lucide="camera" class="w-24 h-24 text-caramel"></i>
+        </div>
+        <div class="absolute bottom-32 right-10 animate-float-delayed opacity-20">
+            <i data-lucide="image" class="w-32 h-32 text-caramel"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div
+                class="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm mb-6">
+                <i data-lucide="sparkles" class="w-4 h-4 text-caramel"></i>
+                <span class="text-sm font-medium text-warm-brown">Visual Feast</span>
+                <i data-lucide="sparkles" class="w-4 h-4 text-caramel"></i>
+            </div>
+
+            <h1 class="font-serif text-5xl lg:text-7xl font-bold text-deep-brown leading-tight mb-6 text-shadow-soft">
+                Our <span class="text-caramel italic">Sweet</span> Gallery
+            </h1>
+
+            <p class="text-lg text-warm-brown/80 max-w-2xl mx-auto leading-relaxed mb-8">
+                A visual journey through our most beloved creations. Each photograph captures the love, craftsmanship,
+                and buttery magic that goes into every treat we create.
+            </p>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button onclick="filterGallery('all')"
+                    class="filter-btn active px-6 py-2 rounded-full bg-white border-2 border-caramel/20 text-warm-brown font-medium hover:border-caramel transition-all"
+                    data-filter="all">
+                    All Creations
+                </button>
+                <button onclick="filterGallery('wedding')"
+                    class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-caramel/20 text-warm-brown font-medium hover:border-caramel transition-all"
+                    data-filter="wedding">
+                    Wedding Cakes
+                </button>
+                <button onclick="filterGallery('birthday')"
+                    class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-caramel/20 text-warm-brown font-medium hover:border-caramel transition-all"
+                    data-filter="birthday">
+                    Birthday Cakes
+                </button>
+                <button onclick="filterGallery('pastries')"
+                    class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-caramel/20 text-warm-brown font-medium hover:border-caramel transition-all"
+                    data-filter="pastries">
+                    Pastries
+                </button>
+                <button onclick="filterGallery('seasonal')"
+                    class="filter-btn px-6 py-2 rounded-full bg-white border-2 border-caramel/20 text-warm-brown font-medium hover:border-caramel transition-all"
+                    data-filter="seasonal">
+                    Seasonal
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-16 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6" id="gallery-grid">
+
+                <!-- Gallery Item 1 - Wedding -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="wedding" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x1000/600" alt="Elegant Wedding Cake"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Garden Elegance</p>
+                        <p class="text-white/80 text-sm">Three-tier vanilla bean with buttercream peonies</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">248 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 - Pastries -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="pastries" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x600/601" alt="Fresh Croissants"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Golden Morning</p>
+                        <p class="text-white/80 text-sm">Buttery croissants with honey glaze</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">189 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 - Birthday -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="birthday" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x900/602" alt="Birthday Cake"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Sprinkle Paradise</p>
+                        <p class="text-white/80 text-sm">Funfetti cake with rainbow buttercream</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">312 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 - Seasonal -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="seasonal" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x700/603" alt="Seasonal Tarts"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Berry Abundance</p>
+                        <p class="text-white/80 text-sm">Summer berry tarts with vanilla custard</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">156 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 - Wedding -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="wedding" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x1100/604" alt="Rustic Wedding Cake"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Rustic Romance</p>
+                        <p class="text-white/80 text-sm">Naked cake with fresh figs and eucalyptus</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">274 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 - Pastries -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="pastries" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x600/605" alt="Macarons"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Pastel Dreams</p>
+                        <p class="text-white/80 text-sm">Assorted French macarons in spring colors</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">198 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 7 - Birthday -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="birthday" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x800/606" alt="Chocolate Birthday Cake"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Chocolate Heaven</p>
+                        <p class="text-white/80 text-sm">Triple chocolate ganache with gold leaf</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">356 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 8 - Seasonal -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="seasonal" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x1000/607" alt="Pumpkin Spice"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Autumn Spice</p>
+                        <p class="text-white/80 text-sm">Pumpkin spice layer cake with cinnamon cream</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">142 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 9 - Pastries -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="pastries" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x700/608" alt="Eclairs"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Parisian Eclairs</p>
+                        <p class="text-white/80 text-sm">Choux pastry with vanilla bean cream</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">167 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 10 - Wedding -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="wedding" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x900/609" alt="Vintage Wedding Cake"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Vintage Lace</p>
+                        <p class="text-white/80 text-sm">Lemon elderflower with piped lace details</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">289 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 11 - Birthday -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="birthday" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x600/610" alt="Cupcake Tower"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Cupcake Mountain</p>
+                        <p class="text-white/80 text-sm">Assorted flavors with fondant toppers</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">203 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 12 - Seasonal -->
+                <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                    data-category="seasonal" onclick="openLightbox(this)">
+                    <img src="https://static.photos/food/800x800/611" alt="Holiday Cookies"
+                        class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-deep-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-white font-serif text-xl font-bold mb-1">Holiday Magic</p>
+                        <p class="text-white/80 text-sm">Decorated sugar cookies in festive shapes</p>
+                        <div class="flex items-center mt-3 space-x-2 text-caramel">
+                            <i data-lucide="heart" class="w-4 h-4 fill-current"></i>
+                            <span class="text-xs">178 loves</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-blush/30 relative overflow-hidden">
+        <div class="absolute inset-0 pattern-bg opacity-30"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <i data-lucide="camera" class="w-12 h-12 text-caramel mx-auto mb-6"></i>
+            <h2 class="font-serif text-3xl lg:text-4xl font-bold text-deep-brown mb-4">Want to See Your Creation Here?
+            </h2>
+            <p class="text-warm-brown/80 mb-8 text-lg">Every cake we make is a unique work of art. Let's create
+                something beautiful together for your next special moment.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="index.html#custom"
+                    class="btn-bake text-white px-8 py-4 rounded-full font-semibold shadow-xl flex items-center justify-center space-x-2 text-lg bg-gradient-to-r from-caramel to-[#C9956C] hover:from-[#C9956C] hover:to-[#B8855C] transition-all hover:-translate-y-0.5">
+                    <span>Start Your Custom Order</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+                <a href="index.html"
+                    class="bg-white text-warm-brown border-2 border-caramel/30 px-8 py-4 rounded-full font-semibold hover:bg-blush/50 transition-all flex items-center justify-center space-x-2 text-lg">
+                    <i data-lucide="home" class="w-5 h-5 text-caramel"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </section>
+   
+    
+    
+
+    <!-- Custom Orders Section -->
+    <!-- <section id="custom" class="py-24 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden">
+                <div class="grid lg:grid-cols-2">
+                    
+                    <div class="p-8 lg:p-12">
+                        <div class="mb-8">
+                            <div class="inline-flex items-center space-x-2 mb-4">
+                                <i data-lucide="pen-tool" class="w-5 h-5 text-caramel"></i>
+                                <span class="text-caramel font-medium tracking-wider uppercase text-sm">Bespoke Creations</span>
+                            </div>
+                            <h2 class="font-serif text-3xl lg:text-4xl font-bold text-deep-brown mb-4">Create Your Dream Cake</h2>
+                            <p class="text-warm-brown/80">Tell us about your vision, and our master bakers will bring it to life with flour, sugar, and a sprinkle of magic.</p>
+                        </div>
+
+                        <form class="space-y-6" onsubmit="handleFormSubmit(event)">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-warm-brown mb-2">Your Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-xl border border-beige focus:border-caramel focus:ring-2 focus:ring-caramel/20 outline-none transition-all bg-cream/30" placeholder="Sarah Johnson">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-warm-brown mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-3 rounded-xl border border-beige focus:border-caramel focus:ring-2 focus:ring-caramel/20 outline-none transition-all bg-cream/30" placeholder="sarah@email.com">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-warm-brown mb-2">Occasion</label>
+                                <select class="w-full px-4 py-3 rounded-xl border border-beige focus:border-caramel focus:ring-2 focus:ring-caramel/20 outline-none transition-all bg-cream/30">
+                                    <option>Wedding</option>
+                                    <option>Birthday</option>
+                                    <option>Anniversary</option>
+                                    <option>Baby Shower</option>
+                                    <option>Corporate Event</option>
+                                    <option>Just Because</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-warm-brown mb-2">Tell Us Your Vision</label>
+                                <textarea rows="4" class="w-full px-4 py-3 rounded-xl border border-beige focus:border-caramel focus:ring-2 focus:ring-caramel/20 outline-none transition-all bg-cream/30" placeholder="I dream of a three-tier vanilla cake with buttercream roses in dusty pink..."></textarea>
+                            </div>
+
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" id="tasting" class="w-5 h-5 rounded border-beige text-caramel focus:ring-caramel">
+                                <label for="tasting" class="text-sm text-warm-brown">I'd like to schedule a tasting session ($25, credited to final order)</label>
+                            </div>
+
+                            <button type="submit" class="w-full btn-bake text-white py-4 rounded-xl font-semibold shadow-lg flex items-center justify-center space-x-2 text-lg">
+                                <span>Send Inquiry</span>
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="relative hidden lg:block">
+                        <img src="https://static.photos/food/800x1000/555" alt="Custom Cake" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-brown/80 via-transparent to-transparent"></div>
+                        
+                        <div class="absolute bottom-8 left-8 right-8 text-white">
+                            <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20">
+                                <i data-lucide="quote" class="w-8 h-8 mb-4 text-caramel"></i>
+                                <p class="italic text-lg mb-4">"They created the exact cake I dreamed of for my daughter's birthday. Every detail was perfect!"</p>
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-caramel rounded-full flex items-center justify-center font-bold">E</div>
+                                    <div>
+                                        <p class="font-semibold">Emma Richardson</p>
+                                        <p class="text-sm text-white/70">Custom Wedding Cake</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-beige/30 relative overflow-hidden">
+        <div class="absolute top-20 left-10 text-caramel/10 animate-whisk">
+            <i data-lucide="utensils" class="w-32 h-32"></i>
+        </div>
+        <div class="absolute bottom-20 right-10 text-caramel/10 animate-whisk" style="animation-delay: 1.5s;">
+            <i data-lucide="chef-hat" class="w-40 h-40"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <div class="inline-flex items-center space-x-2 mb-4">
+                    <i data-lucide="heart" class="w-5 h-5 text-caramel fill-current"></i>
+                    <span class="text-caramel font-medium tracking-wider uppercase text-sm">Sweet Stories</span>
+                    <i data-lucide="heart" class="w-5 h-5 text-caramel fill-current"></i>
+                </div>
+                <h2 class="font-serif text-4xl lg:text-5xl font-bold text-deep-brown mb-4">Made with Love, Shared with Joy</h2>
+                <p class="text-warm-brown/80 text-lg">Every cake we create becomes part of someone's precious memory. Here's what our sweet community has to say.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg card-hover relative">
+                    <div class="absolute -top-4 left-8 bg-caramel text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+                        <i data-lucide="quote" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex text-caramel mb-4 mt-2">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-warm-brown/80 mb-6 leading-relaxed">"The birthday cake they made for my mom's 70th brought tears to her eyes. It looked exactly like the garden she loves, and tasted even better than it looked!"</p>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://static.photos/people/200x200/111" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="font-bold text-deep-brown">Jennifer Miller</p>
+                            <p class="text-sm text-caramel">Birthday Celebration</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg card-hover relative">
+                    <div class="absolute -top-4 left-8 bg-caramel text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+                        <i data-lucide="quote" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex text-caramel mb-4 mt-2">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-warm-brown/80 mb-6 leading-relaxed">"As a wedding photographer, I've seen hundreds of cakes. Sweet Crumbs stands out every single time. The texture, the flavor balance, the artistry—absolute perfection."</p>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://static.photos/people/200x200/222" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="font-bold text-deep-brown">David Chen</p>
+                            <p class="text-sm text-caramel">Wedding Vendor</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg card-hover relative">
+                    <div class="absolute -top-4 left-8 bg-caramel text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+                        <i data-lucide="quote" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex text-caramel mb-4 mt-2">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-warm-brown/80 mb-6 leading-relaxed">"Their croissants remind me of Paris. I stop by every Saturday morning for a coffee and a pastry—it's become my weekly ritual of self-care."</p>
+                    <div class="flex items-center space-x-4">
+                        <img src="https://static.photos/people/200x200/333" alt="Customer" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <p class="font-bold text-deep-brown">Amelia Foster</p>
+                            <p class="text-sm text-caramel">Regular Customer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-caramel relative overflow-hidden">
+        <div class="absolute inset-0 pattern-bg opacity-20"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <i data-lucide="mail" class="w-12 h-12 text-white/80 mx-auto mb-6"></i>
+            <h2 class="font-serif text-3xl lg:text-4xl font-bold text-white mb-4">Join Our Sweet Community</h2>
+            <p class="text-white/90 mb-8 text-lg">Be the first to know about seasonal specials, new flavors, and exclusive baking workshops.</p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onsubmit="handleNewsletter(event)">
+                <input type="email" placeholder="Your email address" class="flex-1 px-6 py-4 rounded-full border-0 focus:ring-2 focus:ring-white/50 outline-none text-deep-brown" required>
+                <button type="submit" class="bg-deep-brown text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-deep-brown transition-all shadow-lg whitespace-nowrap">
+                    Subscribe
+                </button>
+            </form>
+            <p class="text-white/60 text-sm mt-4">We respect your inbox. Unsubscribe anytime.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-brown text-cream pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- Brand -->
+                <div class="col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i data-lucide="cake" class="w-8 h-8 text-caramel"></i>
+                        <h3 class="font-serif text-2xl font-bold">Sweet Crumbs</h3>
+                    </div>
+                    <p class="text-cream/70 mb-6 max-w-sm">Crafting moments of joy through artisanal baking since 2018. Every flour dusted morning begins with love.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-caramel transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-caramel transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-caramel transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-caramel">Visit Us</h4>
+                    <ul class="space-y-2 text-cream/70">
+                        <li class="flex items-start space-x-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 mt-1 flex-shrink-0"></i>
+                            <span>42 Baker's Lane<br>Brooklyn, NY 11201</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="clock" class="w-4 h-4"></i>
+                            <span>Tue-Sun: 7am - 7pm</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <span>(555) 123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-caramel">Quick Links</h4>
+                    <ul class="space-y-2 text-cream/70">
+                        <li><a href="#featured" class="hover:text-caramel transition-colors">Our Menu</a></li>
+                        <li><a href="#custom" class="hover:text-caramel transition-colors">Custom Orders</a></li>
+                        <li><a href="#" class="hover:text-caramel transition-colors">Catering</a></li>
+                        <li><a href="#" class="hover:text-caramel transition-colors">Baking Classes</a></li>
+                        <li><a href="#" class="hover:text-caramel transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <p class="text-cream/50 text-sm">&copy; 2024 Sweet Crumbs Bakery. All rights reserved.</p>
+                <div class="flex space-x-6 text-sm text-cream/50">
+                    <a href="#" class="hover:text-caramel transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-caramel transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white/80 hover:text-white transition-colors z-10" onclick="closeLightbox()">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <button class="absolute left-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors z-10 hidden md:block" onclick="navigateLightbox(-1); event.stopPropagation();">
+            <i data-lucide="chevron-left" class="w-10 h-10"></i>
+        </button>
+        <button class="absolute right-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors z-10 hidden md:block" onclick="navigateLightbox(1); event.stopPropagation();">
+            <i data-lucide="chevron-right" class="w-10 h-10"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Gallery Image" onclick="event.stopPropagation();">
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-center max-w-2xl px-4" onclick="event.stopPropagation();">
+            <p id="lightbox-caption" class="font-serif text-xl font-bold mb-1"></p>
+            <p id="lightbox-desc" class="text-white/80 text-sm"></p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-deep-brown text-white px-6 py-4 rounded-2xl shadow-2xl transform translate-y-32 transition-transform duration-300 z-50 flex items-center space-x-3">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+        <span id="toast-message">Message sent successfully!</span>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+         
+       
+        // Gallery Filter Functionality
+        let currentFilter = 'all';
+        let visibleItems = [];
+        let currentLightboxIndex = 0;
+        
+        function filterGallery(category) {
+            currentFilter = category;
+            const items = document.querySelectorAll('.gallery-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Filter items with animation
+            items.forEach((item, index) => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.classList.add('gallery-fade');
+                    }, index * 50);
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('gallery-fade');
+                }
+            });
+            
+            // Update visible items for lightbox navigation
+            updateVisibleItems();
+        }
+        
+        function updateVisibleItems() {
+            visibleItems = Array.from(document.querySelectorAll('.gallery-item')).filter(item => {
+                return currentFilter === 'all' || item.dataset.category === currentFilter;
+            });
+        }
+        
+        // Lightbox Functions
+        function openLightbox(element) {
+            updateVisibleItems();
+            const img = element.querySelector('img');
+            const caption = element.querySelector('.font-serif').textContent;
+            const desc = element.querySelector('.text-white\\/80').textContent;
+            
+            currentLightboxIndex = visibleItems.indexOf(element);
+            
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxDesc = document.getElementById('lightbox-desc');
+            
+            lightboxImg.src = img.src;
+            lightboxCaption.textContent = caption;
+            lightboxDesc.textContent = desc;
+            
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = visibleItems.length - 1;
+            } else if (currentLightboxIndex >= visibleItems.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            const element = visibleItems[currentLightboxIndex];
+            const img = element.querySelector('img');
+            const caption = element.querySelector('.font-serif').textContent;
+            const desc = element.querySelector('.text-white\\/80').textContent;
+            
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxDesc = document.getElementById('lightbox-desc');
+            
+            // Fade effect
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = img.src;
+                lightboxCaption.textContent = caption;
+                lightboxDesc.textContent = desc;
+                lightboxImg.style.opacity = '1';
+            }, 200);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateVisibleItems();
+        });
+        
+    </script>
+</body>
+</html>
